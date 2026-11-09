@@ -4,18 +4,18 @@ import { ActorModule } from './actor/actor.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { MovieModule } from './movie/movie.module.js';
-import { ReviewModule } from './review/review.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
+import { ReviewModule } from './review/review.module.js';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    PrismaModule,
     MovieModule,
     ReviewModule,
     ActorModule,
-    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
