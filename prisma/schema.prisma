@@ -24,14 +24,27 @@ model Movie {
 
   genre Genre @default(DRAMA)
 
-  reviews Review[] @relation("movie_reviews")
+  moviePoster MoviePoster @relation(fields: [posterId], references: [id])
+  posterId    String      @unique @map("poster_id")
 
-  actors Actor[] @relation("movie_actors")
+  reviews Review[] @relation("movie_reviews")
+  actors  Actor[]  @relation("movie_actors")
 
   createAt  DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("movies")
+}
+
+model MoviePoster {
+  id String @id @default(uuid())
+
+  movie Movie? @relation
+
+  createAt  DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("movie_posters")
 }
 
 model Review {
