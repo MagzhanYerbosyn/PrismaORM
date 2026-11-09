@@ -1,25 +1,15 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
-import { CreateMovieDto } from './dto/create-movie.dto.js';
-import { UpdateMovieDto } from './dto/update-movie.dto.js';
+import { Controller, Get } from '@nestjs/common';
 import { MovieService } from './movie.service.js';
 
 @Controller({
   path: 'movies',
 })
 export class MovieController {
-  // constructor(private readonly movieService: MovieService) {}
-  // @Get()
-  // findAll() {
-  //   return this.movieService.findAll();
-  // }
+  constructor(private readonly movieService: MovieService) {}
+  @Get()
+  findAll() {
+    return this.movieService.findAll();
+  }
   // @Get(':id')
   // findById(@Param('id') id: string) {
   //   return this.movieService.findById(id);

@@ -1,31 +1,31 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
-import { CreateMovieDto } from './dto/create-movie.dto.js';
-import { UpdateMovieDto } from './dto/update-movie.dto.js';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service.js';
 
 @Injectable()
 export class MovieService {
-  // constructor(
-  //   @InjectRepository(MovieEntity)
-  //   private readonly movieRepository: Repository<MovieEntity>,
-  //   @InjectRepository(ActorEntity)
-  //   private readonly actorRepository: Repository<ActorEntity>,
-  // ) {}
-  // async findAll(): Promise<MovieEntity[]> {
-  //   return await this.movieRepository.find({
-  //     where: {
-  //       isAvailable: true,
-  //     },
-  //     order: {
-  //       createdAt: 'desc',
-  //     },
-  //     select: {
-  //       id: true,
-  //       title: true,
-  //     },
-  //   });
-  // }
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async findAll() {
+    return await this.prismaService.movie.findMany({
+      where: {
+        isAvailable: true,
+      },
+      orderBy: {
+        createAt: 'desc',
+      },
+      select: {
+        id: true,
+        title: true,
+        actors: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+  }
+
   // async findById(id: string): Promise<MovieEntity> {
   //   const movie = await this.movieRepository.findOne({
   //     where: {
