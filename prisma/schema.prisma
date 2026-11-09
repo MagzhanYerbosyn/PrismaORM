@@ -39,6 +39,8 @@ model Movie {
 model MoviePoster {
   id String @id @default(uuid())
 
+  url String
+
   movie Movie? @relation
 
   createAt  DateTime @default(now()) @map("created_at")
