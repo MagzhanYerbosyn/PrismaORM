@@ -24,10 +24,27 @@ model Movie {
 
   genre Genre @default(DRAMA)
 
+  reviews Review[] @relation("movie_reviews")
+
   createAt  DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("movies")
+}
+
+model Review {
+  id String @id @default(uuid())
+
+  text   String
+  rating Float  @default(0.0)
+
+  movie   Movie  @relation("movie_reviews", fields: [movieId], references: [id], onDelete: Cascade)
+  movieId String @map("movie_id")
+
+  createAt  DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("reviews")
 }
 
 enum Genre {
