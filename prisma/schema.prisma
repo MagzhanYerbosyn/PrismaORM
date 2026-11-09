@@ -17,9 +17,24 @@ model Movie {
 
   title       String
   description String?
+  releaseYear Int     @map("release_year")
+
+  rating      Float   @default(0.0)
+  isAvailable Boolean @default(false) @map("is_available")
+
+  genre Genre @default(DRAMA)
 
   createAt  DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("movies")
+}
+
+enum Genre {
+  ACTION
+  COMEDY
+  DRAMA
+  HORROR
+
+  @@map("enum_genres")
 }
