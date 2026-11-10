@@ -2,6 +2,7 @@ import {
   IsArray,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
   Max,
@@ -18,6 +19,10 @@ export class CreateMovieDto {
   @Min(1888)
   @Max(new Date().getFullYear())
   releaseYear: number;
+
+  @IsOptional()
+  @IsString()
+  imageUrl: string;
 
   @IsArray()
   @IsUUID('all', { each: true })

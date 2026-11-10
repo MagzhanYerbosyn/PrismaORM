@@ -24,8 +24,8 @@ model Movie {
 
   genre Genre @default(DRAMA)
 
-  moviePoster MoviePoster @relation(fields: [posterId], references: [id])
-  posterId    String      @unique @map("poster_id")
+  moviePoster MoviePoster? @relation(fields: [posterId], references: [id])
+  posterId    String?      @unique @map("poster_id")
 
   reviews Review[] @relation("movie_reviews")
   actors  Actor[]  @relation("movie_actors")

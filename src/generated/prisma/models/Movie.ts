@@ -221,7 +221,7 @@ export type MovieGroupByOutputType = {
   rating: number
   isAvailable: boolean
   genre: $Enums.Genre
-  posterId: string
+  posterId: string | null
   createAt: Date
   updatedAt: Date
   _count: MovieCountAggregateOutputType | null
@@ -257,10 +257,10 @@ export type MovieWhereInput = {
   rating?: Prisma.FloatFilter<"Movie"> | number
   isAvailable?: Prisma.BoolFilter<"Movie"> | boolean
   genre?: Prisma.EnumGenreFilter<"Movie"> | $Enums.Genre
-  posterId?: Prisma.StringFilter<"Movie"> | string
+  posterId?: Prisma.StringNullableFilter<"Movie"> | string | null
   createAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
-  moviePoster?: Prisma.XOR<Prisma.MoviePosterScalarRelationFilter, Prisma.MoviePosterWhereInput>
+  moviePoster?: Prisma.XOR<Prisma.MoviePosterNullableScalarRelationFilter, Prisma.MoviePosterWhereInput> | null
   reviews?: Prisma.ReviewListRelationFilter
   actors?: Prisma.ActorListRelationFilter
 }
@@ -273,7 +273,7 @@ export type MovieOrderByWithRelationInput = {
   rating?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   genre?: Prisma.SortOrder
-  posterId?: Prisma.SortOrder
+  posterId?: Prisma.SortOrderInput | Prisma.SortOrder
   createAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   moviePoster?: Prisma.MoviePosterOrderByWithRelationInput
@@ -295,7 +295,7 @@ export type MovieWhereUniqueInput = Prisma.AtLeast<{
   genre?: Prisma.EnumGenreFilter<"Movie"> | $Enums.Genre
   createAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
-  moviePoster?: Prisma.XOR<Prisma.MoviePosterScalarRelationFilter, Prisma.MoviePosterWhereInput>
+  moviePoster?: Prisma.XOR<Prisma.MoviePosterNullableScalarRelationFilter, Prisma.MoviePosterWhereInput> | null
   reviews?: Prisma.ReviewListRelationFilter
   actors?: Prisma.ActorListRelationFilter
 }, "id" | "posterId">
@@ -308,7 +308,7 @@ export type MovieOrderByWithAggregationInput = {
   rating?: Prisma.SortOrder
   isAvailable?: Prisma.SortOrder
   genre?: Prisma.SortOrder
-  posterId?: Prisma.SortOrder
+  posterId?: Prisma.SortOrderInput | Prisma.SortOrder
   createAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MovieCountOrderByAggregateInput
@@ -329,7 +329,7 @@ export type MovieScalarWhereWithAggregatesInput = {
   rating?: Prisma.FloatWithAggregatesFilter<"Movie"> | number
   isAvailable?: Prisma.BoolWithAggregatesFilter<"Movie"> | boolean
   genre?: Prisma.EnumGenreWithAggregatesFilter<"Movie"> | $Enums.Genre
-  posterId?: Prisma.StringWithAggregatesFilter<"Movie"> | string
+  posterId?: Prisma.StringNullableWithAggregatesFilter<"Movie"> | string | null
   createAt?: Prisma.DateTimeWithAggregatesFilter<"Movie"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Movie"> | Date | string
 }
@@ -344,7 +344,7 @@ export type MovieCreateInput = {
   genre?: $Enums.Genre
   createAt?: Date | string
   updatedAt?: Date | string
-  moviePoster: Prisma.MoviePosterCreateNestedOneWithoutMovieInput
+  moviePoster?: Prisma.MoviePosterCreateNestedOneWithoutMovieInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutMovieInput
   actors?: Prisma.ActorCreateNestedManyWithoutMoviesInput
 }
@@ -357,7 +357,7 @@ export type MovieUncheckedCreateInput = {
   rating?: number
   isAvailable?: boolean
   genre?: $Enums.Genre
-  posterId: string
+  posterId?: string | null
   createAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -374,7 +374,7 @@ export type MovieUpdateInput = {
   genre?: Prisma.EnumGenreFieldUpdateOperationsInput | $Enums.Genre
   createAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  moviePoster?: Prisma.MoviePosterUpdateOneRequiredWithoutMovieNestedInput
+  moviePoster?: Prisma.MoviePosterUpdateOneWithoutMovieNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutMovieNestedInput
   actors?: Prisma.ActorUpdateManyWithoutMoviesNestedInput
 }
@@ -387,7 +387,7 @@ export type MovieUncheckedUpdateInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   genre?: Prisma.EnumGenreFieldUpdateOperationsInput | $Enums.Genre
-  posterId?: Prisma.StringFieldUpdateOperationsInput | string
+  posterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -402,7 +402,7 @@ export type MovieCreateManyInput = {
   rating?: number
   isAvailable?: boolean
   genre?: $Enums.Genre
-  posterId: string
+  posterId?: string | null
   createAt?: Date | string
   updatedAt?: Date | string
 }
@@ -427,7 +427,7 @@ export type MovieUncheckedUpdateManyInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   genre?: Prisma.EnumGenreFieldUpdateOperationsInput | $Enums.Genre
-  posterId?: Prisma.StringFieldUpdateOperationsInput | string
+  posterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -703,7 +703,7 @@ export type MovieCreateWithoutReviewsInput = {
   genre?: $Enums.Genre
   createAt?: Date | string
   updatedAt?: Date | string
-  moviePoster: Prisma.MoviePosterCreateNestedOneWithoutMovieInput
+  moviePoster?: Prisma.MoviePosterCreateNestedOneWithoutMovieInput
   actors?: Prisma.ActorCreateNestedManyWithoutMoviesInput
 }
 
@@ -715,7 +715,7 @@ export type MovieUncheckedCreateWithoutReviewsInput = {
   rating?: number
   isAvailable?: boolean
   genre?: $Enums.Genre
-  posterId: string
+  posterId?: string | null
   createAt?: Date | string
   updatedAt?: Date | string
   actors?: Prisma.ActorUncheckedCreateNestedManyWithoutMoviesInput
@@ -747,7 +747,7 @@ export type MovieUpdateWithoutReviewsInput = {
   genre?: Prisma.EnumGenreFieldUpdateOperationsInput | $Enums.Genre
   createAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  moviePoster?: Prisma.MoviePosterUpdateOneRequiredWithoutMovieNestedInput
+  moviePoster?: Prisma.MoviePosterUpdateOneWithoutMovieNestedInput
   actors?: Prisma.ActorUpdateManyWithoutMoviesNestedInput
 }
 
@@ -759,7 +759,7 @@ export type MovieUncheckedUpdateWithoutReviewsInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   genre?: Prisma.EnumGenreFieldUpdateOperationsInput | $Enums.Genre
-  posterId?: Prisma.StringFieldUpdateOperationsInput | string
+  posterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   actors?: Prisma.ActorUncheckedUpdateManyWithoutMoviesNestedInput
@@ -775,7 +775,7 @@ export type MovieCreateWithoutActorsInput = {
   genre?: $Enums.Genre
   createAt?: Date | string
   updatedAt?: Date | string
-  moviePoster: Prisma.MoviePosterCreateNestedOneWithoutMovieInput
+  moviePoster?: Prisma.MoviePosterCreateNestedOneWithoutMovieInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutMovieInput
 }
 
@@ -787,7 +787,7 @@ export type MovieUncheckedCreateWithoutActorsInput = {
   rating?: number
   isAvailable?: boolean
   genre?: $Enums.Genre
-  posterId: string
+  posterId?: string | null
   createAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutMovieInput
@@ -825,7 +825,7 @@ export type MovieScalarWhereInput = {
   rating?: Prisma.FloatFilter<"Movie"> | number
   isAvailable?: Prisma.BoolFilter<"Movie"> | boolean
   genre?: Prisma.EnumGenreFilter<"Movie"> | $Enums.Genre
-  posterId?: Prisma.StringFilter<"Movie"> | string
+  posterId?: Prisma.StringNullableFilter<"Movie"> | string | null
   createAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Movie"> | Date | string
 }
@@ -840,7 +840,7 @@ export type MovieUpdateWithoutActorsInput = {
   genre?: Prisma.EnumGenreFieldUpdateOperationsInput | $Enums.Genre
   createAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  moviePoster?: Prisma.MoviePosterUpdateOneRequiredWithoutMovieNestedInput
+  moviePoster?: Prisma.MoviePosterUpdateOneWithoutMovieNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutMovieNestedInput
 }
 
@@ -852,7 +852,7 @@ export type MovieUncheckedUpdateWithoutActorsInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   genre?: Prisma.EnumGenreFieldUpdateOperationsInput | $Enums.Genre
-  posterId?: Prisma.StringFieldUpdateOperationsInput | string
+  posterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutMovieNestedInput
@@ -866,7 +866,7 @@ export type MovieUncheckedUpdateManyWithoutActorsInput = {
   rating?: Prisma.FloatFieldUpdateOperationsInput | number
   isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   genre?: Prisma.EnumGenreFieldUpdateOperationsInput | $Enums.Genre
-  posterId?: Prisma.StringFieldUpdateOperationsInput | string
+  posterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -922,7 +922,7 @@ export type MovieSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   posterId?: boolean
   createAt?: boolean
   updatedAt?: boolean
-  moviePoster?: boolean | Prisma.MoviePosterDefaultArgs<ExtArgs>
+  moviePoster?: boolean | Prisma.Movie$moviePosterArgs<ExtArgs>
   reviews?: boolean | Prisma.Movie$reviewsArgs<ExtArgs>
   actors?: boolean | Prisma.Movie$actorsArgs<ExtArgs>
   _count?: boolean | Prisma.MovieCountOutputTypeDefaultArgs<ExtArgs>
@@ -939,7 +939,7 @@ export type MovieSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   posterId?: boolean
   createAt?: boolean
   updatedAt?: boolean
-  moviePoster?: boolean | Prisma.MoviePosterDefaultArgs<ExtArgs>
+  moviePoster?: boolean | Prisma.Movie$moviePosterArgs<ExtArgs>
 }, ExtArgs["result"]["movie"]>
 
 export type MovieSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -953,7 +953,7 @@ export type MovieSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   posterId?: boolean
   createAt?: boolean
   updatedAt?: boolean
-  moviePoster?: boolean | Prisma.MoviePosterDefaultArgs<ExtArgs>
+  moviePoster?: boolean | Prisma.Movie$moviePosterArgs<ExtArgs>
 }, ExtArgs["result"]["movie"]>
 
 export type MovieSelectScalar = {
@@ -971,22 +971,22 @@ export type MovieSelectScalar = {
 
 export type MovieOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "releaseYear" | "rating" | "isAvailable" | "genre" | "posterId" | "createAt" | "updatedAt", ExtArgs["result"]["movie"]>
 export type MovieInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  moviePoster?: boolean | Prisma.MoviePosterDefaultArgs<ExtArgs>
+  moviePoster?: boolean | Prisma.Movie$moviePosterArgs<ExtArgs>
   reviews?: boolean | Prisma.Movie$reviewsArgs<ExtArgs>
   actors?: boolean | Prisma.Movie$actorsArgs<ExtArgs>
   _count?: boolean | Prisma.MovieCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MovieIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  moviePoster?: boolean | Prisma.MoviePosterDefaultArgs<ExtArgs>
+  moviePoster?: boolean | Prisma.Movie$moviePosterArgs<ExtArgs>
 }
 export type MovieIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  moviePoster?: boolean | Prisma.MoviePosterDefaultArgs<ExtArgs>
+  moviePoster?: boolean | Prisma.Movie$moviePosterArgs<ExtArgs>
 }
 
 export type $MoviePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Movie"
   objects: {
-    moviePoster: Prisma.$MoviePosterPayload<ExtArgs>
+    moviePoster: Prisma.$MoviePosterPayload<ExtArgs> | null
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
     actors: Prisma.$ActorPayload<ExtArgs>[]
   }
@@ -998,7 +998,7 @@ export type $MoviePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     rating: number
     isAvailable: boolean
     genre: $Enums.Genre
-    posterId: string
+    posterId: string | null
     createAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["movie"]>
@@ -1395,7 +1395,7 @@ readonly fields: MovieFieldRefs;
  */
 export interface Prisma__MovieClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  moviePoster<T extends Prisma.MoviePosterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MoviePosterDefaultArgs<ExtArgs>>): Prisma.Prisma__MoviePosterClient<runtime.Types.Result.GetResult<Prisma.$MoviePosterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  moviePoster<T extends Prisma.Movie$moviePosterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Movie$moviePosterArgs<ExtArgs>>): Prisma.Prisma__MoviePosterClient<runtime.Types.Result.GetResult<Prisma.$MoviePosterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   reviews<T extends Prisma.Movie$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Movie$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   actors<T extends Prisma.Movie$actorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Movie$actorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1835,6 +1835,25 @@ export type MovieDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Movies to delete.
    */
   limit?: number
+}
+
+/**
+ * Movie.moviePoster
+ */
+export type Movie$moviePosterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MoviePoster
+   */
+  select?: Prisma.MoviePosterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MoviePoster
+   */
+  omit?: Prisma.MoviePosterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MoviePosterInclude<ExtArgs> | null
+  where?: Prisma.MoviePosterWhereInput
 }
 
 /**

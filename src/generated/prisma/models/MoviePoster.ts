@@ -269,9 +269,9 @@ export type MoviePosterUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type MoviePosterScalarRelationFilter = {
-  is?: Prisma.MoviePosterWhereInput
-  isNot?: Prisma.MoviePosterWhereInput
+export type MoviePosterNullableScalarRelationFilter = {
+  is?: Prisma.MoviePosterWhereInput | null
+  isNot?: Prisma.MoviePosterWhereInput | null
 }
 
 export type MoviePosterCountOrderByAggregateInput = {
@@ -301,10 +301,12 @@ export type MoviePosterCreateNestedOneWithoutMovieInput = {
   connect?: Prisma.MoviePosterWhereUniqueInput
 }
 
-export type MoviePosterUpdateOneRequiredWithoutMovieNestedInput = {
+export type MoviePosterUpdateOneWithoutMovieNestedInput = {
   create?: Prisma.XOR<Prisma.MoviePosterCreateWithoutMovieInput, Prisma.MoviePosterUncheckedCreateWithoutMovieInput>
   connectOrCreate?: Prisma.MoviePosterCreateOrConnectWithoutMovieInput
   upsert?: Prisma.MoviePosterUpsertWithoutMovieInput
+  disconnect?: Prisma.MoviePosterWhereInput | boolean
+  delete?: Prisma.MoviePosterWhereInput | boolean
   connect?: Prisma.MoviePosterWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.MoviePosterUpdateToOneWithWhereWithoutMovieInput, Prisma.MoviePosterUpdateWithoutMovieInput>, Prisma.MoviePosterUncheckedUpdateWithoutMovieInput>
 }
