@@ -121,9 +121,15 @@ export class MovieService {
     return true;
   }
 
-  // async delete(id: string): Promise<string> {
-  //   const movie = await this.findById(id);
-  //   await this.movieRepository.remove(movie);
-  //   return movie.id;
-  // }
+  async delete(id: string): Promise<string> {
+    const movie = await this.findById(id);
+
+    await this.prismaService.movie.delete({
+      where: {
+        id,
+      },
+    });
+
+    return movie.id;
+  }
 }
