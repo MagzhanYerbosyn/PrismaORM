@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Movie } from '../generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CreateMovieDto } from './dto/create-movie.dto.js';
+import { UpdateMovieDto } from './dto/update-movie.dto.js';
 
 @Injectable()
 export class MovieService {
@@ -81,12 +82,45 @@ export class MovieService {
     return movie;
   }
 
-  // async update(id: string, dto: UpdateMovieDto): Promise<boolean> {
-  //   const movie = await this.findById(id);
-  //   Object.assign(movie, dto);
-  //   await this.movieRepository.save(movie);
-  //   return true;
-  // }
+  async update(id: string, dto: UpdateMovieDto): Promise<boolean> {
+    const movie = await this.findById(id);
+
+    const actors = await this.prismaService.actor.findMany({
+      where: {
+        id: {
+          in: dto.actorIds,
+        },
+      },
+    });
+
+    if (!actors || !actors.length)
+      throw new NotFoundException('Один или несколько актеров не найдены');
+
+    await this.prismaService.movie.update({
+      where: {
+        id: movie.id,
+      },
+      data: {
+        title: dto.title,
+        releaseYear: dto.releaseYear,
+        moviePoster: dto.imageUrl
+          ? {
+              create: {
+                url: dto.imageUrl,
+              },
+            }
+          : undefined,
+        actors: {
+          connect: actors.map((actor) => ({
+            id: actor.id,
+          })),
+        },
+      },
+    });
+
+    return true;
+  }
+
   // async delete(id: string): Promise<string> {
   //   const movie = await this.findById(id);
   //   await this.movieRepository.remove(movie);
