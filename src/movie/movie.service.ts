@@ -28,18 +28,22 @@ export class MovieService {
     });
   }
 
-  // async findById(id: string): Promise<MovieEntity> {
-  //   const movie = await this.movieRepository.findOne({
-  //     where: {
-  //       id,
-  //     },
-  //     relations: {
-  //       actors: true,
-  //     },
-  //   });
-  //   if (!movie) throw new NotFoundException('Фильм не найден');
-  //   return movie;
-  // }
+  async findById(id: string): Promise<Movie> {
+    const movie = await this.prismaService.movie.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        actors: true,
+        moviePoster: true,
+      },
+    });
+
+    if (!movie || !movie.isAvailable)
+      throw new NotFoundException('Фильм не найден');
+
+    return movie;
+  }
 
   async create(dto: CreateMovieDto): Promise<Movie> {
     const { title, releaseYear, actorIds, imageUrl } = dto;

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateMovieDto } from './dto/create-movie.dto.js';
 import { MovieService } from './movie.service.js';
 
@@ -11,10 +11,10 @@ export class MovieController {
   findAll() {
     return this.movieService.findAll();
   }
-  // @Get(':id')
-  // findById(@Param('id') id: string) {
-  //   return this.movieService.findById(id);
-  // }
+  @Get(':id')
+  findById(@Param('id') id: string) {
+    return this.movieService.findById(id);
+  }
 
   @Post()
   create(@Body() dto: CreateMovieDto) {
