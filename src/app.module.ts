@@ -1,8 +1,13 @@
-import { Module } from '@nestjs/common';
+import {
+  type MiddlewareConsumer,
+  Module,
+  type NestModule,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ActorModule } from './actor/actor.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
+import { LoggingMiddleware } from './common/middlewares/logger.middleware.js';
 import { MovieModule } from './movie/movie.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { ReviewModule } from './review/review.module.js';
@@ -20,4 +25,8 @@ import { ReviewModule } from './review/review.module.js';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggingMiddleware).forRoutes('*');
+  }
+}
